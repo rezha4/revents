@@ -1,13 +1,14 @@
-import { Button } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
+import EventDashboard from "../../features/events/dashboard/EventDashboard";
+import NavBar from "./nav/NavBar";
 
 function App() {
   return (
     <>
-      <h1>welcome to revents!</h1>
-      <button className="ui icon red button">
-        <i className="user icon"></i> CSS Button
-      </button>
-      <Button icon="smile" content="React Button" color="green" />
+      <NavBar />
+      <Container className="main">
+        <EventDashboard />
+      </Container>
     </>
   );
 }
