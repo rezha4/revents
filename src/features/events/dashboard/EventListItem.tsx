@@ -8,17 +8,28 @@ import {
   SegmentGroup,
 } from "semantic-ui-react";
 import EventListAttendee from "./EventListAttendee";
+import { AppEvent, Attendee } from "../../../app/types/event";
 
-export default function EventListItem({ event }: any) {
+export default function EventListItem({
+  event,
+}: {
+  event: AppEvent;
+}) {
   return (
     <SegmentGroup>
       <Segment>
         <ItemGroup>
           <Item>
-            <Item.Image size="tiny" circular src={event.hostPhotoURL} />
+            <Item.Image
+              size="tiny"
+              circular
+              src={event.hostPhotoURL}
+            />
             <Item.Content>
               <Item.Header>{event.title}</Item.Header>
-              <Item.Description>Hosted by {event.hostedBy}</Item.Description>
+              <Item.Description>
+                Hosted by {event.hostedBy}
+              </Item.Description>
             </Item.Content>
           </Item>
         </ItemGroup>
@@ -31,8 +42,11 @@ export default function EventListItem({ event }: any) {
       </Segment>
       <Segment secondary>
         <List horizontal>
-          {event.attendees.map((attendee: any) => (
-            <EventListAttendee key={attendee.id} attendee={attendee} />
+          {event.attendees.map((attendee: Attendee) => (
+            <EventListAttendee
+              key={attendee.id}
+              attendee={attendee}
+            />
           ))}
         </List>
       </Segment>

@@ -1,9 +1,14 @@
+import { AppEvent } from "../../../app/types/event";
 import EventListItem from "./EventListItem";
 
-export default function EventList(props: any) {
+export default function EventList({
+  events,
+}: {
+  events: AppEvent[];
+}) {
   return (
     <>
-      {props.events.map((event: any) => (
+      {events.map((event: AppEvent) => (
         <EventListItem key={event.id} event={event} />
       ))}
     </>
