@@ -10,8 +10,15 @@ import {
 import EventListAttendee from "./EventListAttendee";
 import { AppEvent, Attendee } from "../../../app/types/event";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../../app/store/store";
+import { deleteEvent } from "../eventSlice";
 
-export default function EventListItem({ event }: { event: AppEvent }) {
+export default function EventListItem({
+  event,
+}: {
+  event: AppEvent;
+}) {
+  const dispatch = useAppDispatch();
   return (
     <SegmentGroup>
       <Segment>
@@ -49,7 +56,12 @@ export default function EventListItem({ event }: { event: AppEvent }) {
       </Segment>
       <Segment clearing>
         <span>{event.description}</span>
-        <Button color="red" floated="right" content="Delete" />
+        <Button
+          onClick={() => dispatch(deleteEvent(event.id))}
+          color="red"
+          floated="right"
+          content="Delete"
+        />
         <Button
           as={Link}
           to={`/events/${event.id}`}

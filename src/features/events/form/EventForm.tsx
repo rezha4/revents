@@ -1,9 +1,22 @@
 import { ChangeEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Form, Header, Segment } from "semantic-ui-react";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../app/store/store";
+import { createEvent, updateEvent } from "../eventSlice";
+import { createId } from "@paralleldrive/cuid2";
 
 export default function EventForm() {
-  const initialValue = {
+  let { id } = useParams();
+  const event = useAppSelector((state) =>
+    state.events.events.find((e) => e.id === id)
+  );
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const initialValue = event ?? {
     title: "",
     category: "",
     description: "",
@@ -15,18 +28,18 @@ export default function EventForm() {
   const [values, setValues] = useState(initialValue);
 
   function onSubmit() {
-    console.log(values);
-    // selectedEvent
-    //   ? updateEvent({ ...selectedEvent, ...values })
-    //   : addEvent({
-    //       ...values,
-    //       id: createId(),
-    //       hostedBy: "Mock",
-    //       attendees: [],
-    //       hostPhotoURL: "",
-    //     });
-
-    // setFormOpen(false);
+    id = id ?? createId();
+    event
+      ? dispatch(updateEvent({ ...event, ...values }))
+      : dispatch(
+          createEvent({
+            id,
+            hostedBy: "Mock",
+            attendees: [],
+            hostPhotoURL: "",
+          })
+        );
+    navigate(`/events/${id}`);
   }
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
@@ -36,7 +49,7 @@ export default function EventForm() {
 
   return (
     <Segment clearing>
-      <Header content="Create Event" />
+      <Header content={event ? "Update Event" : "Create Event"} />
       <Form onSubmit={onSubmit}>
         <Form.Field>
           <input
@@ -94,13 +107,18 @@ export default function EventForm() {
         </Form.Field>
 
         <Button
-        
           type="submit"
           floated="right"
           positive
           content="Submit"
         />
-        <Button as={Link} to={"/events"} type="button" floated="right" content="Cancel" />
+        <Button
+          as={Link}
+          to={"/events"}
+          type="button"
+          floated="right"
+          content="Cancel"
+        />
       </Form>
     </Segment>
   );
