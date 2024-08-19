@@ -1,17 +1,17 @@
 import { Button, MenuItem } from "semantic-ui-react";
+import { useAppDispatch } from "../../store/store";
+import { openModal } from "../../common/modals/modalSlice";
 
-export default function SignedOutButtons({
-  setAuth,
-}: {
-  setAuth: (value: boolean) => void;
-}) {
+export default function SignedOutButtons() {
+  const dispatch = useAppDispatch();
+
   return (
     <MenuItem position="right">
       <Button
         basic
         inverted
         content="Login"
-        onClick={() => setAuth(true)}
+        onClick={() => dispatch(openModal({type: "LoginForm"}))}
       />
       <Button
         basic
