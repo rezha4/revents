@@ -3,6 +3,7 @@ import {
   Icon,
   Item,
   ItemGroup,
+  Label,
   List,
   Segment,
   SegmentGroup,
@@ -10,15 +11,13 @@ import {
 import EventListAttendee from "./EventListAttendee";
 import { AppEvent, Attendee } from "../../../app/types/event";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "../../../app/store/store";
-import { deleteEvent } from "../eventSlice";
 
 export default function EventListItem({
   event,
 }: {
   event: AppEvent;
 }) {
-  const dispatch = useAppDispatch();
+
   return (
     <SegmentGroup>
       <Segment>
@@ -34,6 +33,14 @@ export default function EventListItem({
               <Item.Description>
                 Hosted by {event.hostedBy}
               </Item.Description>
+              {event.isCancelled && (
+                <Label 
+                  style={{top: "-40px"}}
+                  ribbon="right"
+                  color="red"
+                  content="This event is cancelled"
+                />
+              )}
             </Item.Content>
           </Item>
         </ItemGroup>
@@ -56,12 +63,6 @@ export default function EventListItem({
       </Segment>
       <Segment clearing>
         <span>{event.description}</span>
-        <Button
-          onClick={() => dispatch(deleteEvent(event.id))}
-          color="red"
-          floated="right"
-          content="Delete"
-        />
         <Button
           as={Link}
           to={`/events/${event.id}`}

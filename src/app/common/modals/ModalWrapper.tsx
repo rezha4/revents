@@ -11,7 +11,7 @@ type Props = {
 export default function ModalWrapper({
   children,
   header,
-  ...props
+  // ...props
 }: Props) {
   const { open } = useAppSelector((state) => state.modals);
   const dispatch = useAppDispatch();
