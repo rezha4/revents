@@ -16,7 +16,7 @@ export default function ModalWrapper({
   const { open } = useAppSelector((state) => state.modals);
   const dispatch = useAppDispatch();
   return (
-    <Modal open={open} onClose={() => dispatch(closeModal())}>
+    <Modal size="mini" open={open} onClose={() => dispatch(closeModal())}>
       {header && <Modal.Header>{header}</Modal.Header>}
       <Modal.Content>{children}</Modal.Content>
     </Modal>
